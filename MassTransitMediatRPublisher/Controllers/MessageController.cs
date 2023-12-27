@@ -22,4 +22,12 @@ public class MessageController : ControllerBase
         var handlerResponse = await _mediator.Send(handlerRequest);
         return handlerResponse;
     }
+
+    [HttpPost("facebook")]
+    public async Task<IActionResult> SendFacebookOrder([FromQuery] string text)
+    {
+        var handlerRequest = new SendFacebookOrderCommand(text);
+        var handlerResponse = await _mediator.Send(handlerRequest);
+        return handlerResponse;
+    }
 }

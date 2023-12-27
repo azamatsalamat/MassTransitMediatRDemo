@@ -1,5 +1,6 @@
 using MassTransit;
 using MassTransitMediatRPublisher.Options;
+using MassTransitMediatRPublisher.Pipeline;
 using Microsoft.Extensions.Options;
 using System.Reflection;
 
@@ -38,7 +39,10 @@ builder.Services.AddMassTransit(x =>
 #endregion
 
 #region MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
+    cfg.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+});
 #endregion
 
 var app = builder.Build();
